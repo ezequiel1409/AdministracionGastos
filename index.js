@@ -47,6 +47,38 @@ app.get("/getProductByID", (req, res) => {
         });
     }
 });
+app.delete("/deleteProductByID", (req, res) => {
+    const productId = parseInt(req.body.id);
+    console.log(productId);
+    const indiceAEliminar = products.findIndex(producto => producto.id === productId);
+    if (indiceAEliminar !== -1) {
+        products.splice(indiceAEliminar, 1);
+        console.log(products);
+        return res.status(200).json({
+            text: "Se ha borrado el elemento exitosamente!",
+        });
+    }else{
+        return res.status(404).json({
+            text: "No se encontró ningún producto con el ID proporcionado",
+        });
+    }   
+});
+app.put("/updateProductByID", (req, res) => {
+    const productId = parseInt(req.body.id);
+    const indiceAActualizar = products.findIndex(producto => producto.id === productId);
+    if (indiceAActualizar !== -1) {
+        products[indiceAActualizar] = req.body;
+        console.log(products);
+        return res.status(200).json({
+            text: "Se ha actualizado el elemento exitosamente!",
+            product: products[indiceAActualizar]
+        });
+    }else{
+        return res.status(404).json({
+            text: "No se encontró ningún producto con el ID proporcionado",
+        });
+    }   
+});
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en puerto: ${port}`);
