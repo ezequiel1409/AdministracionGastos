@@ -1,0 +1,16 @@
+<div class="container">
+    <h2>Listado de Gastos</h2>
+    <div *ngIf="gastos && gastos.length > 0 else noGastos">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let gasto of gastos">
+          <span class="badge bg-primary">{{ gasto.Monto }}</span>-
+          <span>{{ gasto.Descripcion }}</span>-
+          <span class="badge bg-secondary">{{ gasto.FormaDePago }}</span>-
+          <span class="badge bg-info">{{ gasto.Categoria }}</span>-
+        </li>
+      </ul>
+    </div>
+    <ng-template #noGastos>
+      <p>No hay gastos para mostrar.</p>
+    </ng-template>
+  </div>
