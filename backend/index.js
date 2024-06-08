@@ -5,7 +5,7 @@ const connectToDatabase = require('./database/db'); // Ajusta la ruta si es nece
 
 const app = express();
 const port = 3000;
-
+console.log("hola");
 app.use(logger('dev'));
 app.use(express.json());
 app.use(bodyParser.json());
