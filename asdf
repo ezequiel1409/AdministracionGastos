@@ -1,0 +1,32 @@
+[33mcommit 0c5038ec53b5e31308c8af25f5b7eee04a5c8eda[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Ezequiel Matias Gonzalez <ezequiel140901@gmail.com>
+Date:   Sat Jun 8 17:56:02 2024 -0300
+
+    reestructuración de proyecto
+
+[33mcommit 0ba0dd080be9d7f81386cdff3e938977eb317754[m[33m ([m[1;31mAdministracionGastos/main[m[33m)[m
+Author: Ezequiel Matias Gonzalez <ezequiel140901@gmail.com>
+Date:   Sat Jun 8 17:13:31 2024 -0300
+
+    agregado de Base de Datos y front en angular
+
+[33mcommit bd41fb72e44b4eaaabefffe639afe43a95ec2a0a[m
+Author: Ezequiel Matias Gonzalez <ezequiel140901@gmail.com>
+Date:   Fri May 3 00:01:01 2024 -0300
+
+    agregado de delete y update by id
+
+[33mcommit e084a20870f36110f6d493af0b95fcd4a35079ef[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Ezequiel Matias Gonzalez <ezequiel140901@gmail.com>
+Date:   Thu May 2 00:24:37 2024 -0300
+
+    agregado de create y get by id
+
+[33mcommit f057ee1ceedf90f5e0f1e621aba4bec70ec4c9e7[m
+Author: Ezequiel Matias Gonzalez <ezequiel140901@gmail.com>
+Date:   Wed May 1 19:21:12 2024 -0300
+
+    first commit
+
+
+    31mAdministracionGastosas
