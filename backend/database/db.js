@@ -5,6 +5,7 @@ const credentials = require('./credentials'); // Asegúrate de tener las credenc
 async function connectToDatabase() {
   try {
     const connection = await mysql.createConnection(credentials);
+    console.log("Conexión extiosa");
     return connection;
   } catch (err) {
     console.error('Error al conectar a la base de datos:', err);

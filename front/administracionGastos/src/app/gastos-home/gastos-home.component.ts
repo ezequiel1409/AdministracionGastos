@@ -1,26 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BackendService } from '../services/backend.service';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-gastos-home',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gastos-home.component.html',
-  styleUrl: './gastos-home.component.scss'
+  styleUrl: './gastos-home.component.scss',
+  providers: [HttpClient]
 })
 export class GastosHomeComponent implements OnInit {
-  gastos: any[]; // Definir el tipo adecuado para los datos de gastos
+  gastos: any[] = [];
 
-  constructor() {
-    this.gastos = [];
-   }
+  constructor(private backendService: BackendService) { }
 
   ngOnInit(): void {
-    // Simular datos estáticos para los gastos
-    this.gastos = [
-      { Monto: 50.25, Descripcion: 'Comida', FormaDePago: 'Efectivo', Categoria: 'Alimentación' },
-      { Monto: 20.00, Descripcion: 'Transporte', FormaDePago: 'Tarjeta', Categoria: 'Transporte' },
-      { Monto: 100.00, Descripcion: 'Ropa', FormaDePago: 'Efectivo', Categoria: 'Compras' }
-      // Puedes agregar más elementos según sea necesario
-    ];
+    this.obtenerGastos();
+  }
+
+  obtenerGastos(): void {
+    this.backendService.obtenerGastos()
+      .subscribe(
+        (data) => {
+          this.gastos = data;
+        },
+        (error) => {
+          console.error('Error al obtener los gastos', error);
+        }
+      );
   }
 }

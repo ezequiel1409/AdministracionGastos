@@ -13,9 +13,17 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send('<h1>Hola</h1>');
 });
-app.get('gasto', (req,res) => {
-    
-})
+app.get('/gastos', async (req, res) => {
+  try {
+      const connection = await connectToDatabase();
+      const [rows, fields] = await connection.execute("SELECT * FROM gastos");
+      console.log(rows, fields);
+      res.json(rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error al obtener los datos');
+  }
+});
 app.post('/gasto', async (req, res) => {
   try {
     const connection = await connectToDatabase();
