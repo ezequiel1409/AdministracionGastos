@@ -1,6 +1,21 @@
 import { Routes } from '@angular/router';
-import { GastosHomeComponent } from './gastos-home/gastos-home.component';
 
 export const routes: Routes = [
-    { path: 'gastos', component: GastosHomeComponent}
+    {
+    path: '',
+    loadComponent: () => import('./contenedor/contenedor.component').then(module => module.ContenedorComponent),
+    children: [
+      {
+        path: 'gastos',
+        title: 'Gastos',
+        loadComponent: () => import('./gastos-home/gastos-home.component').then(module => module.GastosHomeComponent),
+      },
+    ],
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: '/gastos',
+    pathMatch: 'full'
+  }
 ];

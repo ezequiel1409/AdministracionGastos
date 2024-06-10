@@ -13,5 +13,6 @@ export class BackendService {
   obtenerGastos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/gastos`);
   }
+  // agregarGasto(): P
  
 }
