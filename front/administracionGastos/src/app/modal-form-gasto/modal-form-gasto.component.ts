@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-form-gasto',
@@ -8,6 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './modal-form-gasto.component.scss'
 })
 export class ModalFormGastoComponent {
-  dialog: any;
-
+  constructor(@Inject(MatDialogRef) public dialogRef: MatDialogRef<ModalFormGastoComponent>) { }
+  cancel() {
+    this.dialogRef.close(); // Close the modal without saving
+  }
 }

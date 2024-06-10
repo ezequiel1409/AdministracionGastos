@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BackendService } from '../services/backend.service';
 import { HttpClient } from '@angular/common/http';
 import { ModalFormGastoComponent } from '../modal-form-gasto/modal-form-gasto.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gastos-home',
@@ -14,9 +15,7 @@ import { ModalFormGastoComponent } from '../modal-form-gasto/modal-form-gasto.co
 })
 export class GastosHomeComponent implements OnInit {
   gastos: any[] = [];
-  dialog: any;
-
-  constructor(private backendService: BackendService) { }
+  constructor(private backendService: BackendService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.obtenerGastos();
@@ -33,17 +32,18 @@ export class GastosHomeComponent implements OnInit {
         }
       });
   }
+
   openExpenseModal() {
     const dialogRef = this.dialog.open(ModalFormGastoComponent, {
       width: '400px' // Adjust modal width as needed
     });
-  
+
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         // Refresh expense list or update UI based on saved expense
         console.log('Expense saved successfully!');
       }
     });
-  }
-  
+    }
+   
 }
