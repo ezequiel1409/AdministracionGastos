@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { IGasto } from '../interface/IGasto';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +14,21 @@ export class BackendService {
   obtenerGastos(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/gastos`);
   }
-  // agregarGasto(): P
- 
+  obtenerCategoriaPorID(): Observable<any> {
+    return this.http.get<any[]>(`${this.baseUrl}/categoria`);
+  }
+  obtenerUsuarioPorNombre(): Observable<any> {
+    return this.http.get<any[]>(`${this.baseUrl}/usuario`);
+  }
+  obtenerIngreso(): Observable<any> {
+    return this.http.get<any[]>(`${this.baseUrl}/ingresos`);
+  }
+  agregarGasto(gasto: IGasto): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<any>(`${this.baseUrl}/gasto`, gasto ,httpOptions);
+  }
 }

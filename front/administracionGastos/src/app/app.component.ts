@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { GastosHomeComponent } from './gastos-home/gastos-home.component';
+import { GastosHomeComponent } from './components/gastos-home/gastos-home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,  GastosHomeComponent],
+  imports: [CommonModule, RouterOutlet, GastosHomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

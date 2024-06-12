@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BackendService } from '../services/backend.service';
 import { HttpClient } from '@angular/common/http';
-import { ModalFormGastoComponent } from '../modal-form-gasto/modal-form-gasto.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BackendService } from '../../services/backend.service';
+import { ModalFormGastoComponent } from '../../modal/modal-form-gasto/modal-form-gasto.component';
 
 @Component({
   selector: 'app-gastos-home',

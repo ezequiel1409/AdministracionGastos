@@ -1,0 +1,54 @@
+<div class="relative z-10 modal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+   
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-center">
+              <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Agregar gasto</h3>
+                <div class="body-form">
+                  <form [formGroup]="expenseForm" >
+                    <div class="flex flex-col gap-4 mb-4">
+                      <div class="flex items-center">
+                        <label for="Descripcion" class="block w-24 text-sm font-medium text-gray-700">Descripción</label>
+                        <input type="text" id="description" formControlName="Descripcion" class="mt-1 flex-grow focus:outline-none border border-gray-300 rounded-md w-full" />
+                      </div>
+                
+                      <div class="flex items-center">
+                        <label for="Monto" class="block w-24 text-sm font-medium text-gray-700">Monto</label>
+                        <input type="number" id="Monto" formControlName="Monto" class="mt-1 flex-grow focus:outline-none border border-gray-300 rounded-md w-full" />
+                      </div>
+                
+                      <div class="flex items-center">
+                        <label for="Categoria" class="block w-24 text-sm font-medium text-gray-700">Categoría</label>
+                        <select id="Categoria" formControlName="Categoria" class="mt-1 flex-grow focus:outline-none border border-gray-300 rounded-md w-full">
+                          <option value="" disabled selected>Seleccionar categoría</option>
+                          <option value="alimentacion">Alimentación</option>
+                          <option value="transporte">Transporte</option>
+                          <option value="vivienda">Vivienda</option>
+                          <option value="otros">Otros</option>
+                        </select>
+                      </div>
+                
+                      <div class="flex items-center">
+                        <label for="FormaDePago" class="block w-24 text-sm font-medium text-gray-700">Forma de pago</label>
+                        <input type="text" id="FormaDePago" formControlName="FormaDePago" class="mt-1 flex-grow focus:outline-none border border-gray-300 rounded-md w-full" />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <button type="button" class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto" (click)="onClickSave()">Guardar</button>
+            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" (click)="onClickCancel()">Cancelar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
