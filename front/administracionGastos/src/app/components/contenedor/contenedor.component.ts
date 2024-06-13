@@ -3,11 +3,11 @@ import { CabeceraComponenteComponent } from '../cabecera-componente/cabecera-com
 import { GastosHomeComponent } from '../gastos-home/gastos-home.component';
 
 @Component({
-  selector: 'app-contenedor',
-  standalone: true,
-  imports: [CabeceraComponenteComponent, GastosHomeComponent],
-  templateUrl: './contenedor.component.html',
-  styleUrl: './contenedor.component.scss'
+    selector: 'app-contenedor',
+    standalone: true,
+    templateUrl: './contenedor.component.html',
+    styleUrl: './contenedor.component.scss',
+    imports: [CabeceraComponenteComponent, GastosHomeComponent]
 })
 export class ContenedorComponent {
 

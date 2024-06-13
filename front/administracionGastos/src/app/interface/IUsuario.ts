@@ -1,4 +1,4 @@
-export interface TopLevel {
+export interface Usuario {
     idUsuarios: null;
     Nombre:     string;
 }

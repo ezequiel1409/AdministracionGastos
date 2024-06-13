@@ -1,37 +1,43 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-4">Listado de Gastos</h1>
-
-
-  <table class="w-full border-collapse mt-4">
-    <caption class="caption-top p-3  object-right">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded object-right" (click)="openExpenseModal()">Agregar Gasto</button>
-    </caption>
-    <thead>
-      <tr>
-        <th class="border px-4 py-2 text-left font-medium">Monto</th>
-        <th class="border px-4 py-2 text-left font-medium">Descripción</th>
-        <th class="border px-4 py-2 text-left font-medium">Forma de pago</th>
-        <th class="border px-4 py-2 text-left font-medium">A quién debe pagar</th>
-        <th class="border px-4 py-2 text-left font-medium">Categoría</th>
-        <th class="border px-4 py-2 text-left font-medium">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let gasto of gastos" class="hover:bg-gray-100">
-        <td class="border px-4 py-2 text-right">{{ gasto.Monto | currency: gasto.moneda :'symbol':'1.0-0' }}</td>
-        <td class="border px-4 py-2">{{ gasto.Descripcion }}</td>
-        <td class="border px-4 py-2">{{ gasto.FormaDePago }}</td>
-        <td class="border px-4 py-2">{{ gasto.usuarioID }}</td>
-        <td class="border px-4 py-2">{{ gasto.Categoria }}</td>
-        <td class="border px-4 py-2 flex justify-end space-x-2">
-          <button class="px-2 py-1 text-white bg-green-500 rounded hover:bg-blue-700 focus:outline-none">Editar</button>
-          <button class="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none">Eliminar</button>
-        </td>
-      </tr>
-      <tr *ngIf="!gastos?.length" class="text-center">
-        <td colspan="5">No hay gastos para mostrar.</td>
-      </tr>
-    </tbody>
-  </table>
-  
-</div>
+    <div class="flex justify-between items-center mb-4">
+      <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled">Importar</button>
+      <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-blue-600"  (click)="openExpenseModal()">Agregar</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+            <tr>
+              <th class="px-4 py-2 border">Monto</th>
+              <th class="px-4 py-2 border">Descripción</th>
+              <th class="px-4 py-2 border">Forma de pago</th>
+              <th class="px-4 py-2 border">A quién debe pagar</th>
+              <th class="px-4 py-2 border">Categoría</th>
+              <th class="px-4 py-2 border">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let gasto of gastos" class="hover:bg-gray-100">
+            <td class="border px-4 py-2 text-right">{{ gasto.Monto | currency: gasto.moneda :'symbol':'1.0-0' }}</td>
+            <td class="border px-4 py-2">{{ gasto.Descripcion }}</td>
+            <td class="border px-4 py-2">{{ gasto.FormaDePago }}</td>
+            <td class="border px-4 py-2">{{ gasto.usuarioID }}</td>
+            <td class="border px-4 py-2">{{ gasto.Categoria }}</td>
+            <td class="border px-4 py-2 flex justify-end space-x-2">
+              <button class="px-2 py-1 text-white bg-green-500  hover:bg-blue-700 focus:outline-none rounded-xl" title="Editar"> <i class="fas fa-edit" ></i></button>
+              <button class="px-2 py-1 text-white bg-red-500  hover:bg-red-700 focus:outline-none rounded-xl" title="Eliminar"> <i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr *ngIf="!gastos?.length" class="text-center">
+            <td colspan="5">No hay gastos para mostrar.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 flex justify-between items-center">
+      <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 disabled">Exportar</button>
+      <div class="flex items-center">
+        <span class="mr-2">Navegación</span>
+        <button class="bg-gray-200 text-black px-3 py-1 rounded-l hover:bg-gray-300">1</button>
+        <button class="bg-gray-200 text-black px-3 py-1 hover:bg-gray-300">2</button>
+        <button class="bg-gray-200 text-black px-3 py-1 rounded-r hover:bg-gray-300">...</button>
+      </div>
+    </div>
