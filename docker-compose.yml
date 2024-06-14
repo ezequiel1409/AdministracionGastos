@@ -9,9 +9,8 @@ services:
 
   frontend:
     build:
-      context: ./front/administracionGastos
-
-    po<rts:
-      - "80:80"
+      context: ./front/administraciongastos
+    ports:
+      - "4200:4200"
     depends_on:
       - backend

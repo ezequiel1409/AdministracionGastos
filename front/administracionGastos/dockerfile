@@ -1,19 +1,27 @@
 # Etapa de construcción
-FROM node:18-alpine AS build
+FROM node:18 AS build
 
 WORKDIR /app
 
+# Instalar dependencias
 COPY package*.json ./
 RUN npm install
-COPY . .
 
+# Copiar archivos fuente y construir la aplicación
+COPY . .
 RUN npm run build --prod
 
-# Etapa de producción
-FROM nginx:alpine
+# Etapa de desarrollo (para ejecutar la aplicación Angular)
+FROM node:18
 
-COPY --from=build /app/dist/administracion-gastos /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+COPY /app/dist/administracionGastos /usr/share/nginx/html
 
-CMD ["nginx", "-g", "daemon off;"]
+# Instalar dependencias solo para desarrollo
+RUN npm install -g @angular/cli@latest
+
+EXPOSE 4200
+
+# Comando para iniciar el servidor de desarrollo de Angular
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
