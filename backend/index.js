@@ -23,6 +23,16 @@ app.get('/gastos', async (req, res) => {
       res.status(500).send('Error al obtener los datos');
   }
 });
+app.get('/monedas', async (req, res) => {
+  try {
+      const connection = await connectToDatabase();
+      const [rows, fields] = await connection.execute("SELECT * FROM monedas");
+      res.json(rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error al obtener los datos');
+  }
+});
 app.post('/newexpense', async (req, res) => {
   try {
     const { Monto, Descripcion, FormaDePago, usuarioID, categoriaID } = req.body;

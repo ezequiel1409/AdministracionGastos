@@ -1,5 +1,6 @@
     <div class="flex justify-between items-center mb-4">
       <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled">Importar</button>
+      <div> Periodo a pagar mes en curso: Julio 2024 - 07/24</div>
       <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-blue-600"  (click)="openExpenseModal()">Agregar</button>
     </div>
     <div class="overflow-x-auto">
@@ -22,8 +23,8 @@
             <td class="border px-4 py-2">{{ gasto.usuarioID }}</td>
             <td class="border px-4 py-2">{{ gasto.Categoria }}</td>
             <td class="border px-4 py-2 flex justify-end space-x-2">
-              <button class="px-2 py-1 text-white bg-green-500  hover:bg-blue-700 focus:outline-none rounded-xl" title="Editar"> <i class="fas fa-edit" ></i></button>
-              <button class="px-2 py-1 text-white bg-red-500  hover:bg-red-700 focus:outline-none rounded-xl" title="Eliminar"> <i class="fas fa-trash"></i></button>
+              <button class="px-2 py-1 text-white bg-green-500  hover:bg-blue-700 focus:outline-none rounded-xl" title="Editar" (click)="onClickEditGasto"> <i class="fas fa-edit" ></i></button>
+              <button class="px-2 py-1 text-white bg-red-500  hover:bg-red-700 focus:outline-none rounded-xl" title="Eliminar" (click)="onClickEliminarGasto"> <i class="fas fa-trash"></i></button>
             </td>
           </tr>
           <tr *ngIf="!gastos?.length" class="text-center">

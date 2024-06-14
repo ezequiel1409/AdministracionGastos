@@ -32,7 +32,12 @@ export class GastosHomeComponent implements OnInit {
         }
       });
   }
+  onClickEditGasto(): void{
 
+  }
+  onClickEliminarGasto(): void{
+    
+  }
   openExpenseModal() {
     const dialogRef = this.dialog.open(ModalFormGastoComponent, {
       width: '400px' // Adjust modal width as needed
@@ -43,6 +48,7 @@ export class GastosHomeComponent implements OnInit {
         // Refresh expense list or update UI based on saved expense
         console.log('Expense saved successfully!');
       }
+      console.log("gasto no guardado")
     });
     }
    
