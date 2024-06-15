@@ -1,0 +1,24 @@
+# Etapa de construcción
+FROM node:18 AS build
+
+WORKDIR /app
+
+# Copiar archivos de configuración y dependencias
+COPY package*.json ./
+RUN npm install
+
+# Copiar archivos fuente y compilar la aplicación
+COPY . .
+RUN npm run build --prod
+
+# Etapa de producción
+FROM nginx:alpine
+
+# Copiar los archivos compilados de la etapa anterior a Nginx
+COPY --from=build /dist/administracionGastos /usr/share/nginx/html
+
+# Configurar el puerto expuesto por Nginx
+EXPOSE 80
+
+# Comando para iniciar Nginx en primer plano
+CMD ["nginx", "-g", "daemon off;"]

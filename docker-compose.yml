@@ -1,0 +1,16 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: ./front/administraciongastos
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
