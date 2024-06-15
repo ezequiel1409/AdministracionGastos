@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalFormBodyCComponent } from './modal-form-body-c.component';
+import { FormEditarGastoComponent } from './form-editar-gasto.component';
 
-describe('ModalFormBodyCComponent', () => {
-  let component: ModalFormBodyCComponent;
-  let fixture: ComponentFixture<ModalFormBodyCComponent>;
+describe('FormEditarGastoComponent', () => {
+  let component: FormEditarGastoComponent;
+  let fixture: ComponentFixture<FormEditarGastoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalFormBodyCComponent]
+      imports: [FormEditarGastoComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ModalFormBodyCComponent);
+    fixture = TestBed.createComponent(FormEditarGastoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

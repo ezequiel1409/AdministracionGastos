@@ -29,6 +29,7 @@ export class ModalFormGastoComponent {
   onClickSave() {
     if (this.expenseForm) {
       const expenseData: IGasto = {
+        
         Monto: this.expenseForm.get('Monto')?.value,
         Descripcion: this.expenseForm.get('Descripcion')?.value,
         categoriaID: this.expenseForm.get('Categoria')?.value,

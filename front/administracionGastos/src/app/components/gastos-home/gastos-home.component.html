@@ -23,14 +23,20 @@
             <td class="border px-4 py-2">{{ gasto.usuarioID }}</td>
             <td class="border px-4 py-2">{{ gasto.Categoria }}</td>
             <td class="border px-4 py-2 flex justify-end space-x-2">
-              <button class="px-2 py-1 text-white bg-green-500  hover:bg-blue-700 focus:outline-none rounded-xl" title="Editar" (click)="onClickEditGasto"> <i class="fas fa-edit" ></i></button>
+              <button class="px-2 py-1 text-white bg-green-500  hover:bg-blue-700 focus:outline-none rounded-xl" title="Editar" (click)="onClickEditGasto(gasto)"> <i class="fas fa-edit" ></i></button>
               <button class="px-2 py-1 text-white bg-red-500  hover:bg-red-700 focus:outline-none rounded-xl" title="Eliminar" (click)="onClickEliminarGasto"> <i class="fas fa-trash"></i></button>
             </td>
           </tr>
           <tr *ngIf="!gastos?.length" class="text-center">
             <td colspan="5">No hay gastos para mostrar.</td>
           </tr>
-        </tbody>
+          </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Suma total de los gastos </th>
+                <td> {{totalGastos}}</td>
+              </tr>
+            </tfoot>
       </table>
     </div>
     <div class="mt-4 flex justify-between items-center">

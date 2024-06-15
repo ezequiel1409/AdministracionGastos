@@ -24,8 +24,8 @@ export class BackendService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
   
-  obtenerGastos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/gastos`)
+  obtenerGastos(): Observable<IGasto[]> {
+    return this.http.get<IGasto[]>(`${this.baseUrl}/gastos`)
       .pipe(
         catchError(this.handleError)
       );

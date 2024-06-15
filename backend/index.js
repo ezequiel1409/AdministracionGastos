@@ -62,7 +62,7 @@ app.post('/newexpense', async (req, res) => {
 
     await connection.end();
 
-    res.status(201).json({
+    res.status(200).json({
       text: 'Gasto agregado correctamente',
       gasto: {
         idgastos: result.insertId,
