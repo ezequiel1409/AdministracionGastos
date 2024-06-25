@@ -30,7 +30,12 @@ export class BackendService {
         catchError(this.handleError)
       );
   }
-
+  obtenerSumaDeLosGastos(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/gastos/total`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
   obtenerCategoriaPorID(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/categoria`)
       .pipe(
@@ -63,4 +68,17 @@ export class BackendService {
         catchError(this.handleError)
       );
   }
+  editarGasto(gasto: IGasto): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    const url = `${this.baseUrl}/gasto/${gasto.idgasto}`; 
+    return this.http.put<any>(url, gasto, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  
 }

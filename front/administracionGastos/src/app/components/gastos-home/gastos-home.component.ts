@@ -40,11 +40,18 @@ export class GastosHomeComponent implements OnInit {
       });
   }
   sumarGastos(): void {
-    this.totalGastos = this.gastos.reduce((acc, gasto) => {
-      const monto = gasto.monto;
-      return acc + (typeof monto === 'number' && !isNaN(monto) ? monto : 0);
-    }, 0);
-    console.log("Suma total de los gastos:", this.totalGastos);
+    this.backendService.obtenerSumaDeLosGastos()
+      .subscribe({
+        next: data => {
+          this.totalGastos = data;
+          console.log("Suma total de los gastos:", this.totalGastos);
+
+        },
+        error: error => {
+          console.error('Error al obtener los gastos', error);
+        }
+      });
+   
   }
   onClickEditGasto(_gasto: IGasto): void {
     const dialogRef = this.dialog.open(FormEditarGastoComponent, {
