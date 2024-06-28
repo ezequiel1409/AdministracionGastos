@@ -31,13 +31,22 @@ app.get('/gastos', async (req, res) => {
       res.status(500).send('Error al obtener los datos');
   }
 });
+app.get('/gasto/detalle/:id', async (req, res) => {
+  try {
+    const gastoID = req.params.id;
+      const [rows, fields] = await connection.execute("SELECT * FROM gastos where idGastos = " +  gastoID);
+      res.json(rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error al obtener los datos');
+  }
+});
 app.get('/gastos/total', async (req, res) => {
   try {
     const [rows, fields] = await connection.execute(' SELECT SUM(gastos.monto) AS total_expenses FROM gastos');
     const totalExpenses = rows[0].total_expenses; // Assuming the result is in the first row
 
     if (totalExpenses === null) {
-      // Handle the case where there are no expenses
       res.json({ message: 'No hay gastos registrados' });
     } else {
       res.json({ total_expenses: totalExpenses });
@@ -74,7 +83,7 @@ app.post('/gasto', async (req, res) => {
       beneficiario ?? null,
       moneda ?? null,
     ]);
-
+    console.log(usuarioID);
 
     res.status(200).json({
       text: 'Gasto agregado correctamente',
@@ -95,7 +104,7 @@ app.post('/gasto', async (req, res) => {
   }
 });
 
-app.put('gasto/:id', async (req, res) => {
+app.put('gasto/:idgastos', async (req, res) => {
   try {
     const gastoID = req.params.id;
     const { Monto, Descripcion, FormaDePago, usuarioID, categoriaID } = req.body;
@@ -128,8 +137,25 @@ app.put('gasto/:id', async (req, res) => {
     console.error('Error al insertar el gasto:', err);
     res.status(500).json({ error: 'Error al insertar el gasto' });
   }
-
 });
+app.delete('/gasto/:id', async (req, res) => {
+  const gastoID = req.params.id;
+  const query = 'DELETE FROM gastos WHERE idgastos = ?';
+  try {
+    const [results] = await connection.query(query, [gastoID]);
+
+
+    if (results.affectedRows === 0) {
+      return res.status(404).send("No se pudo eliminar el gasto");
+    }
+    return send(json(res.statusCode(), res.statusMessage()))
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error); // Agregar mensaje de error
+    res.status(500).send("Error al eliminar el gasto");
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en puerto: ${port}`);
 });
