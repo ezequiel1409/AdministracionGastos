@@ -13,9 +13,17 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('<h1>Hola</h1>');
 });
+let connection;
+(async () => {
+  try {
+    connection = await connectToDatabase();
+  } catch (err) {
+    console.error("Error connecting to database:", err);
+    process.exit(1); // Exit the process if connection fails
+  }
+})();
 app.get('/gastos', async (req, res) => {
   try {
-      const connection = await connectToDatabase();
       const [rows, fields] = await connection.execute("SELECT * FROM gastos");
       res.json(rows);
   } catch (err) {
@@ -23,9 +31,34 @@ app.get('/gastos', async (req, res) => {
       res.status(500).send('Error al obtener los datos');
   }
 });
+app.get('/gasto/detalle/:id', async (req, res) => {
+  try {
+    const gastoID = req.params.id;
+      const [rows, fields] = await connection.execute("SELECT * FROM gastos where idGastos = " +  gastoID);
+      res.json(rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error al obtener los datos');
+  }
+});
+app.get('/gastos/total', async (req, res) => {
+  try {
+    const [rows, fields] = await connection.execute(' SELECT SUM(gastos.monto) AS total_expenses FROM gastos');
+    const totalExpenses = rows[0].total_expenses; // Assuming the result is in the first row
+
+    if (totalExpenses === null) {
+      res.json({ message: 'No hay gastos registrados' });
+    } else {
+      res.json({ total_expenses: totalExpenses });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener el total de gastos');
+  }
+});
+
 app.get('/monedas', async (req, res) => {
   try {
-      const connection = await connectToDatabase();
       const [rows, fields] = await connection.execute("SELECT * FROM monedas");
       res.json(rows);
   } catch (err) {
@@ -33,34 +66,24 @@ app.get('/monedas', async (req, res) => {
       res.status(500).send('Error al obtener los datos');
   }
 });
-app.post('/newexpense', async (req, res) => {
+app.post('/gasto', async (req, res) => {
   try {
-    const { Monto, Descripcion, FormaDePago, usuarioID, categoriaID } = req.body;
-
-    // Log para verificar los datos recibidos
-    console.log("Received data: ", req.body);
-    console.log("Monto:", Monto);
-    console.log("Descripcion:", Descripcion);
-    console.log("FormaDePago:", FormaDePago);
-    console.log("usuarioID:", usuarioID);
-    console.log("categoriaID:", categoriaID);
-
-    // Validación de los campos obligatorios
+    const { Monto, Descripcion, FormaDePago, usuarioID, categoriaID, beneficiario, moneda } = req.body;
     if (Monto === undefined || Descripcion === undefined) {
       return res.status(400).json({ error: 'Monto y Descripción son obligatorios' });
     }
 
-    const connection = await connectToDatabase();
-    const query = 'INSERT INTO gastos (Monto, Descripcion, FormaDePago, usuarioID, categoriaID) VALUES (?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO gastos (Monto, Descripcion, FormaDePago, usuarioID, categoriaID,beneficiario, moneda) VALUES (?, ?, ?, ?, ?, ?, ?)';
     const [result] = await connection.execute(query, [
       Monto,
       Descripcion,
       FormaDePago ?? null,
       usuarioID ?? null,
-      categoriaID ?? null
+      categoriaID ?? null,
+      beneficiario ?? null,
+      moneda ?? null,
     ]);
-
-    await connection.end();
+    console.log(usuarioID);
 
     res.status(200).json({
       text: 'Gasto agregado correctamente',
@@ -70,7 +93,9 @@ app.post('/newexpense', async (req, res) => {
         Descripcion,
         FormaDePago,
         usuarioID,
-        categoriaID
+        categoriaID,
+        beneficiario,
+        moneda
       }
     });
   } catch (err) {
@@ -78,6 +103,59 @@ app.post('/newexpense', async (req, res) => {
     res.status(500).json({ error: 'Error al insertar el gasto' });
   }
 });
+
+app.put('gasto/:idgastos', async (req, res) => {
+  try {
+    const gastoID = req.params.id;
+    const { Monto, Descripcion, FormaDePago, usuarioID, categoriaID } = req.body;
+    if (!Monto || !Descripcion) {
+      return res.status(400).json({ error: 'Monto y Descripción son obligatorios' });
+    }
+    const query = `
+      UPDATE gastos
+      SET Monto = ?, Descripcion = ?, FormaDePago = ?, usuarioID = ?, categoriaID = ?
+      WHERE id = ?
+    `;
+    const [results] = await connection.query(query, [Monto, Descripcion, FormaDePago, usuarioID, categoriaID, gastoID]);
+
+    if (results.affectedRows === 0) {
+      return null;
+    }
+    const gastoActualizado = {
+      id: gastoID,
+      Monto,
+      Descripcion,
+      FormaDePago,
+      usuarioID,
+      categoriaID
+    };
+
+    return gastoActualizado;
+
+
+  }catch(err){
+    console.error('Error al insertar el gasto:', err);
+    res.status(500).json({ error: 'Error al insertar el gasto' });
+  }
+});
+app.delete('/gasto/:id', async (req, res) => {
+  const gastoID = req.params.id;
+  const query = 'DELETE FROM gastos WHERE idgastos = ?';
+  try {
+    const [results] = await connection.query(query, [gastoID]);
+
+
+    if (results.affectedRows === 0) {
+      return res.status(404).send("No se pudo eliminar el gasto");
+    }
+    return send(json(res.statusCode(), res.statusMessage()))
+  } catch (error) {
+    console.error('Error al ejecutar la consulta:', error); // Agregar mensaje de error
+    res.status(500).send("Error al eliminar el gasto");
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en puerto: ${port}`);
 });

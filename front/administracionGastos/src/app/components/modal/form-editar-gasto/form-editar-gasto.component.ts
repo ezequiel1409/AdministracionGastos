@@ -12,6 +12,7 @@ import { BackendService } from '../../../services/backend.service';
   styleUrl: './form-editar-gasto.component.scss'
 })
 export class FormEditarGastoComponent {
+  
   expenseForm: FormGroup = this.fb.group({
     Monto: [this.gasto.Monto, Validators.required],
     UsuarioID: [this.gasto.usuarioID, Validators.required],
@@ -22,14 +23,16 @@ export class FormEditarGastoComponent {
   });
 
   constructor(
-    @Inject(MatDialogRef) public dialogRef: MatDialogRef<FormEditarGastoComponent>,
+     @Inject(MatDialogRef) public dialogRef: MatDialogRef<FormEditarGastoComponent>,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public gasto: IGasto,
     private backendService: BackendService,
+
   ) { }
 
   
   onClickCancel() {
+
     this.dialogRef.close(); // Close the modal without saving
   }
   onClickSave() {

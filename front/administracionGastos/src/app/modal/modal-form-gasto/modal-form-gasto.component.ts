@@ -19,6 +19,8 @@ export class ModalFormGastoComponent {
       Descripcion: new FormControl('', [Validators.required]),
       CategoriaID: new FormControl('', [Validators.required]),
       FormaDePago: new FormControl('', [Validators.required]),
+      Moneda: new FormControl('', [Validators.required]),
+      Beneficiario: new FormControl('', [Validators.required]),
   }); 
 
   constructor(@Inject(MatDialogRef) public dialogRef: MatDialogRef<ModalFormGastoComponent>, private backendService: BackendService, private  fb:  FormBuilder) { }
@@ -32,12 +34,14 @@ export class ModalFormGastoComponent {
         
         Monto: this.expenseForm.get('Monto')?.value,
         Descripcion: this.expenseForm.get('Descripcion')?.value,
-        categoriaID: this.expenseForm.get('Categoria')?.value,
-        FormaDePago: this.expenseForm.get('categoryID')?.value,
+        categoriaID: this.expenseForm.get('CategoriaID')?.value,
+        FormaDePago: this.expenseForm.get('FormaDePago')?.value,
         usuarioID: 1,
-        beneficiario:  null || 0,
+        beneficiario:  1,
         moneda: this.expenseForm.get('Moneda')?.value,
       };
+      console.log(expenseData.categoriaID);
+      
       this.saveExpense(expenseData);
     } else {
       console.error("ExpenseForm es null o undefined");

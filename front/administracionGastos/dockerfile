@@ -1,24 +1,35 @@
-# Etapa de construcción
-FROM node:18 AS build
+# Etapa 1: Construcción de la aplicación Angular
+FROM node:20.12.2 AS build
 
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de configuración y dependencias
+# Copiar package.json y package-lock.json
 COPY package*.json ./
+
+# Instalar dependencias utilizando npm
 RUN npm install
 
-# Copiar archivos fuente y compilar la aplicación
+# Copiar el resto del código de la aplicación
 COPY . .
-RUN npm run build --prod
 
-# Etapa de producción
-FROM nginx:alpine
+# Compilar la aplicación Angular para producción
+RUN npm run build -- --configuration production
 
-# Copiar los archivos compilados de la etapa anterior a Nginx
-COPY --from=build /dist/administracionGastos /usr/share/nginx/html
+# Etapa 2: Servir la aplicación Angular compilada
+FROM node:20.12.2
 
-# Configurar el puerto expuesto por Nginx
-EXPOSE 80
+# Establecer el directorio de trabajo
+WORKDIR /app
 
-# Comando para iniciar Nginx en primer plano
-CMD ["nginx", "-g", "daemon off;"]
+# Copiar los archivos compilados desde la etapa de construcción
+COPY --from=build /app/dist/administracion-gastos /app/dist/administracion-gastos
+
+# Instalar un servidor HTTP simple para servir los archivos estáticos
+RUN npm install -g http-server
+
+# Exponer el puerto en el que se ejecuta la aplicación
+EXPOSE 8080
+
+# Comando para iniciar el servidor HTTP
+CMD ["http-server", "dist/administracion-gastos", "-p", "8080"]

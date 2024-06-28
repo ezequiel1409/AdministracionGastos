@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production",
+    "build": "npx @angular/cli/bin/ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:administracionGastos": "node dist/administracion-gastos/server/server.mjs"
+    "serve:ssr:administracionGastos": "node dist/administracion-gastos/server/server.mjs",
+    "prebuild": "npm install @angular/cli"
   },
   "private": true,
   "dependencies": {
